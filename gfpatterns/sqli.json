@@ -1,0 +1,19 @@
+{
+  "flags": "-iE",
+  "patterns": [
+    "php?[[:alnum:]]*=",
+    "asp?[[:alnum:]]*=",
+    "[?]id=",
+    "[?]cat=",
+    "[?]cat=",
+    "[?]view=",
+    "[?]mode=",
+    "[?]tid=",
+    "[?]table=",
+    "[?]module=",
+    "[?]name=",
+    "[?]user=",
+    "[?]from=",
+    "[?]column="
+  ]
+}

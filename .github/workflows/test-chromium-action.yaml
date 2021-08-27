@@ -1,0 +1,79 @@
+# This is a demo setup workflow to test ./lazyrecon.sh on Mac and linux
+# `sudo -E` needs to avoid Permission denied issue
+
+name: test-chromium-action
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the $default-branch branch
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+# schedule:
+# - cron: '0 0 * * 0'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # The type of runner that the job will run on
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Setup golang
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
+
+      # Runs a set of commands using the runners shell
+      - name: Install & Recon
+        env:
+          GO111MODULE: on
+          DISCORDWEBHOOKURL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          export HOMEDIR=$HOME
+          export HOMEUSER=$RUNNER_USER
+          export STORAGEDIR="${HOMEDIR}"/lazytargets
+          pwd
+          ls -alt
+          env
+          echo "HOMEUSER=$HOMEUSER"
+          echo "HOMEDIR=$HOMEDIR"
+          echo "STORAGEDIR=$STORAGEDIR"
+          echo "GO111MODULE=$GO111MODULE"
+          # sudo -E ./install.sh
+          # ./test/test_install.sh "./test/dependencies_list.txt"
+          MACOS=
+          if [[ "$OSTYPE" == "darwin"* ]]; then
+            MACOS="1"
+          fi
+          git clone https://github.com/storenth/chromium-latest-linux.git
+          if cd chromium-latest-linux; then
+              if [[ -n "$MACOS" ]]; then
+                  # mac development https://github.com/storenth/chromium-latest-linux
+                  sudo ./install-update-mac.sh
+                  sudo ln -s $PWD/latest/Chromium.app/Contents/MacOS/Chromium /usr/local/bin/chromium
+              else
+                  sudo ./update.sh
+                  sudo ln -s $PWD/latest/chrome /usr/local/bin/chromium
+              fi
+              cd -
+          fi
+          mkdir screenshots
+          sudo /usr/local/bin/chromium --headless --no-sandbox --window-size=1280,720 --screenshot="screenshots/google_com.png" https://google.com
+          ls -alth
+          ls -alth ./screenshots
+          file="${PWD}/screenshots/google_com.png"
+          sudo curl -v -H "Content-Type: multipart/form-data" -X POST -F file=@$file $DISCORDWEBHOOKURL
+        shell: bash

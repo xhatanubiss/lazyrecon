@@ -1,0 +1,46 @@
+{
+    "target": {
+        "scope": {
+            "advanced_mode": true,
+            "exclude": [
+                {
+                    "enabled": true,
+                    "file": "^/.*",
+                    "host": "^portal-pre\\.saas\\.inspectorio\\.com$",
+                    "port": "^443$",
+                    "protocol": "https"
+                }
+            ],
+            "include": [
+                {
+                    "enabled": true,
+                    "file": "^/.*",
+                    "host": "^dev\\.gamma\\.be$",
+                    "port": "^80$",
+                    "protocol": "http"
+                },
+                {
+                    "enabled": true,
+                    "file": "^/.*",
+                    "host": "^pre\\.saas\\.inspectorio\\.com$",
+                    "port": "^443$",
+                    "protocol": "https"
+                },
+                {
+                    "enabled": true,
+                    "file": "^/.*",
+                    "host": "^10\\.10\\.77\\.20$",
+                    "port": "^443$",
+                    "protocol": "https"
+                },
+                {
+                    "enabled": true,
+                    "file": "^/.*",
+                    "host": "10.10.77.20",
+                    "port": "80",
+                    "protocol": "http"
+                }
+            ]
+        }
+    }
+}

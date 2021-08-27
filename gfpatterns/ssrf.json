@@ -1,0 +1,16 @@
+{
+    "flags": "-oiaE",
+    "patterns": [
+        "(([[:alnum:][:punct:]]+)+)?[?]ip=",
+        "(([[:alnum:][:punct:]]+)+)?cmd=",
+        "(([[:alnum:][:punct:]]+)+)?next=",
+        "(([[:alnum:][:punct:]]+)+)?redirect=",
+        "(([[:alnum:][:punct:]]+)+)?redirect_to=",
+        "(([[:alnum:][:punct:]]+)+)?uri=",
+        "(([[:alnum:][:punct:]]+)+)?page=",
+        "(([[:alnum:][:punct:]]+)+)?ref=",
+        "(([[:alnum:][:punct:]]+)+)?referer=",
+        "(([[:alnum:][:punct:]]+)+)?host=",
+        "(([[:alnum:][:punct:]]+)+)?url="
+    ]
+}
